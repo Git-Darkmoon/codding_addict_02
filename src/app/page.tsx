@@ -1,103 +1,112 @@
-import Image from "next/image";
+"use client"
+
+import Image from "next/image"
+import { useState } from "react"
+
+const people = [
+  {
+    name: "Pepine",
+    role: "UX Director",
+    picture:
+      "https://images.unsplash.com/photo-1651917388545-7ec903f93d08?q=80&w=1463&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description:
+      "I'm baby fingerstache mlkshk tousled, beard etsy adaptogen 90's pug live-edge. Farm-to-table banjo paleo, praxis live-edge enamel pin single-origin coffee woke tacos sus blog occupy. ",
+  },
+  {
+    name: "Maxine",
+    role: "Head of Engineering",
+    picture:
+      "https://images.unsplash.com/photo-1620274549078-11bf5291cb9a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG1vZGVsc3xlbnwwfDJ8MHx8fDA%3D",
+    description:
+      "Bodega boys letterpress readymade +1 street art godard. Sustainable gastropub lyft ennui. Vape artisan mumblecore, fixie umami pinterest yuccie franzen microdosing organic art party ramps.",
+  },
+  {
+    name: "Luline",
+    role: "FP&A Lead",
+    picture:
+      "https://images.unsplash.com/photo-1515256722043-0f2b082ddadc?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5hdHVyZXxlbnwwfDJ8MHx8fDA%3D",
+    description:
+      "Disrupt activated charcoal heirloom, wayfarers whatever neutra chambray selfies master cleanse blue bottle sustainable pork belly pok pok same. Selvage intelligentsia four loko, copper mug deep v selfies whatever +1. ",
+  },
+  {
+    name: "Meline",
+    role: "HR Manager",
+    picture:
+      "https://images.unsplash.com/photo-1574169207511-e21a21c8075a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bmF0dXJlfGVufDB8MnwwfHx8MA%3D%3D",
+    description:
+      "Gatekeep gorpcore copper mug, direct trade tote bag selvage wolf hammock art party beard grailed. Tote bag polaroid green juice yuccie. Irony cronut woke tumeric semiotics offal forage tote bag cray. Vinyl crucifix locavore mumblecore yuccie.",
+  },
+  {
+    name: "Cerafin",
+    role: "FP&A Lead",
+    picture:
+      "https://images.unsplash.com/photo-1546526423-692c8aea931e?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG5hdHVyZXxlbnwwfDJ8MHx8fDA%3D",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ratione aut ea nostrum qui praesentium quo. Cumque, incidunt! Animi, corrupti!",
+  },
+]
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [arrayIndex, setArrayIndex] = useState(0)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handlePreviousReview = () => {
+    setArrayIndex((prev) => (prev === 0 ? people.length - 1 : prev - 1))
+  }
+
+  const handleNextReview = () => {
+    setArrayIndex((prev) =>
+      prev !== people.length - 1 ? prev + 1 : (prev = 0)
+    )
+  }
+
+  const handleSurprise = () => {
+    const random = Math.floor(Math.random() * people.length)
+    setArrayIndex(random)
+  }
+
+  return (
+    <section className="grid place-content-center min-h-screen">
+      <h2 className="text-center font-semibold text-4xl mb-12">
+        What people say about us
+      </h2>
+      <article className="w-80 mx-auto shadow-2xl bg-slate-100 rounded-sm p-8">
+        <h6 className="uppercase text-gray-700 mb-5 text-center text-xl font-semibold">
+          {people[arrayIndex].name}
+        </h6>
+        <Image
+          src={people[arrayIndex].picture}
+          alt={`Picture of ${people[arrayIndex].name}`}
+          width={200}
+          height={200}
+          className="rounded-full object-center mx-auto aspect-square"
+        />
+        <h4 className="py-1 text-3xl text-rose-400 font-semibold">
+          {people[arrayIndex].role}
+        </h4>
+        <p className="text-gray-900/80 font-medium text-left">
+          {people[arrayIndex].description}
+        </p>
+        <div className="py-5 flex justify-around">
+          <button
+            onClick={handlePreviousReview}
+            className="cursor-pointer px-2 py-0.5 hover:bg-slate-600 hover:text-slate-100 transition-all border-slate-700/20 rounded text-slate-600 border-2"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Prev
+          </button>
+          <button
+            onClick={handleNextReview}
+            className="cursor-pointer px-2 py-0.5 hover:bg-slate-600 hover:text-slate-100 transition-all https://images.unsplash.com/photo-1546526423-692c8aea931e?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG5hdHVyZXxlbnwwfDJ8MHx8fDA%3D1 border-slate-700/20 rounded text-slate-600 border-2"
           >
-            Read our docs
-          </a>
+            Next
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleSurprise}
+          className="underline underline-offset-2 cursor-help w-full"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          Surprise me
+        </button>
+      </article>
+    </section>
+  )
 }
